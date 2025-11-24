@@ -6,31 +6,31 @@ A lightweight Windows system tray application that allows you to quickly toggle 
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Python](https://img.shields.io/badge/Python-3.7%2B-blue)
 
-## ✨ Features
+## Features
 
-- 🖥️ **System Tray Integration** - Lives quietly in your Windows system tray
+- **System Tray Integration** - Lives quietly in your Windows system tray
 - 🔴🟢 **Visual Status Indicator** - Green = enabled, Red = disabled
-- ⚡ **One-Click Toggle** - Right-click to enable/disable your Ethernet adapter
-- 🔍 **Auto-Detection** - Automatically finds your Ethernet adapter
-- 🚀 **Auto-Startup** - Optional "Start with Windows" during installation
-- 📦 **Standalone Installer** - No Python installation required
-- 💾 **Lightweight** - Minimal resource usage (~20-30 MB installed)
+- **One-Click Toggle** - Right-click to enable/disable your Ethernet adapter
+- **Auto-Detection** - Automatically finds your Ethernet adapter
+- **Auto-Startup** - Optional "Start with Windows" during installation
+- **Standalone Installer** - No Python installation required
+- **Lightweight** - Minimal resource usage (~20-30 MB installed)
 
-## 📥 Download
+## Download
 
-**[Download Latest Release](https://github.com/yourusername/ethernet-toggle/releases/latest)**
+**[Download Latest Release](https://github.com/chilidogsonic/ethernet-toggle/releases/latest)**
 
 Download `EthernetToggle-Setup.exe` from the latest release.
 
-## 🚀 Installation
+## Installation
 
 ### For End Users
 
-1. **Download** `EthernetToggle-Setup.exe` from the [Releases](https://github.com/yourusername/ethernet-toggle/releases) page
+1. **Download** `EthernetToggle-Setup.exe` from the [Releases](https://github.com/chilidogsonic/ethernet-toggle/releases) page
 2. **Run the installer** (requires administrator privileges)
 3. **Follow the installation wizard:**
    - Choose installation directory
-   - ✅ Check "Start with Windows" to enable automatic startup (recommended)
+   - Check "Start with Windows" to enable automatic startup (recommended)
    - Click Install
 4. **Done!** The app will appear in your system tray
 
@@ -44,7 +44,7 @@ Download `EthernetToggle-Setup.exe` from the latest release.
 
 The uninstaller will automatically remove the app and auto-startup configuration.
 
-## 🎯 Usage
+## Usage
 
 1. **Look for the icon** in your system tray (notification area)
    - 🟢 Green circle = Ethernet enabled
@@ -56,7 +56,7 @@ The uninstaller will automatically remove the app and auto-startup configuration
 
 That's it! Simple and straightforward.
 
-## 🛠️ For Developers
+## For Developers
 
 ### Requirements
 
@@ -97,7 +97,7 @@ To remove: Run `remove_startup.bat` as administrator.
 
 **Note:** If you used the installer, auto-startup was already configured during installation.
 
-## 🔧 Building from Source
+## Building from Source
 
 Want to build your own installer? See [BUILD.md](BUILD.md) for detailed instructions.
 
@@ -119,7 +119,7 @@ This creates `Output\EthernetToggle-Setup.exe` that you can distribute.
 - [Inno Setup 6](https://jrsoftware.org/isinfo.php) (for building installer)
 - PyInstaller (auto-installed by build script)
 
-## ❓ Troubleshooting
+## Troubleshooting
 
 <details>
 <summary><b>"Could not find Ethernet adapter" error</b></summary>
@@ -153,7 +153,7 @@ This creates `Output\EthernetToggle-Setup.exe` that you can distribute.
 - Try restarting the application
 </details>
 
-## 📋 Technical Details
+## Technical Details
 
 - **Language:** Python 3.7+
 - **UI Framework:** pystray (system tray integration)
@@ -163,17 +163,17 @@ This creates `Output\EthernetToggle-Setup.exe` that you can distribute.
 - **Installer:** Inno Setup (Windows installer creation)
 - **Size:** ~20-30 MB (includes Python runtime)
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Feel free to:
 - Report bugs
 - Suggest new features
 - Submit pull requests
 
-## ⭐ Support
+## Support
 
 If you find this tool useful, please consider giving it a star on GitHub!
