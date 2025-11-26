@@ -37,8 +37,6 @@ Network Kill Switch is a powerful yet simple Windows utility that gives you inst
   - 5 minutes
   - 30 minutes
   - 1 hour
-- **Live Countdown Display** - See remaining time in real-time on the tray icon tooltip
-- **Loading Animation** - Visual feedback during network state changes
 - **Status Verification** - Automatically verifies adapter state after toggling
 - **Auto-Detection** - Finds your physical network adapters automatically
 - **Auto-Startup** - Optional "Start with Windows" during installation
