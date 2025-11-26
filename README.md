@@ -15,6 +15,12 @@
   <img src="https://img.shields.io/badge/version-2.0.0-orange" alt="Version 2.0.0"/>
 </p>
 
+<p align="center">
+  <a href="https://github.com/chilidogsonic/network-kill-switch/releases/tag/v2.0.0">
+    <img src="https://img.shields.io/badge/Download%20Now-v2.0.0-brightgreen?style=for-the-badge&logo=download&logoColor=white" alt="Download Now"/>
+  </a>
+</p>
+
 ## What is Network Kill Switch?
 
 Network Kill Switch is a powerful yet simple Windows utility that gives you instant control over your network connections. With a single click from your system tray, you can disable or enable all network adapters (Ethernet and WiFi) simultaneously. Perfect for privacy, security, focus time, or quick network troubleshooting.
