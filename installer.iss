@@ -1,11 +1,11 @@
-; Inno Setup Script for Ethernet Toggle Application
+; Inno Setup Script for Network Kill Switch Application
 ; Requires Inno Setup 6.0 or later: https://jrsoftware.org/isinfo.php
 
-#define MyAppName "Ethernet Toggle"
-#define MyAppVersion "1.0.0"
-#define MyAppPublisher "Ethernet Toggle"
-#define MyAppURL "https://github.com/yourusername/ethernet-toggle"
-#define MyAppExeName "EthernetToggle.exe"
+#define MyAppName "Network Kill Switch"
+#define MyAppVersion "2.0.0"
+#define MyAppPublisher "Network Kill Switch"
+#define MyAppURL "https://github.com/chilidogsonic/network-kill-switch"
+#define MyAppExeName "NetworkKillSwitch.exe"
 
 [Setup]
 ; Application information
@@ -24,7 +24,7 @@ DisableProgramGroupPage=yes
 
 ; Output
 OutputDir=Output
-OutputBaseFilename=EthernetToggle-Setup
+OutputBaseFilename=NetworkKillSwitch-Setup
 Compression=lzma
 SolidCompression=yes
 
@@ -34,13 +34,13 @@ PrivilegesRequiredOverridesAllowed=dialog
 
 ; Visual
 WizardStyle=modern
-; SetupIconFile=icon.ico
+SetupIconFile=icon.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
 ; Compatibility
 MinVersion=10.0
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -53,19 +53,21 @@ Name: "startauto"; Description: "Start {#MyAppName} automatically when Windows s
 Source: "dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 ; Icon files for system tray
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion recursesubdirs createallsubdirs
-; PowerShell scripts for auto-startup
+; PowerShell scripts for auto-startup and diagnostics
 Source: "setup_task_silent.ps1"; DestDir: "{app}"; Flags: ignoreversion
 Source: "uninstall_task.ps1"; DestDir: "{app}"; Flags: ignoreversion
+Source: "check_task_permissions.ps1"; DestDir: "{app}"; Flags: ignoreversion
 ; Documentation
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion isreadme
+Source: "TROUBLESHOOTING.md"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-; Create Start Menu shortcut
+; Create Start Menu shortcut (admin elevation embedded in EXE manifest)
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Comment: "Toggle Ethernet adapter on/off"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 
 [Run]
-; Option to launch application after installation
+; Option to launch application after installation (admin elevation embedded in EXE)
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent shellexec
 
 [Code]
@@ -116,14 +118,22 @@ end;
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
   ResultCode: Integer;
+  InstallPath: String;
 begin
   if CurUninstallStep = usUninstall then
   begin
     // Kill any running instances of the app
-    Exec('taskkill', '/F /IM EthernetToggle.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec('taskkill', '/F /IM NetworkKillSwitch.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     Sleep(1000); // Wait for process to terminate
 
     // Remove scheduled task if it exists
     RemoveAutoStart();
+  end;
+
+  if CurUninstallStep = usPostUninstall then
+  begin
+    // Remove the installation directory if empty
+    InstallPath := ExpandConstant('{app}');
+    RemoveDir(InstallPath);
   end;
 end;

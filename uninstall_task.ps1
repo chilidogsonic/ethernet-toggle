@@ -1,11 +1,11 @@
-# Silent PowerShell Script for Uninstaller - Remove Ethernet Toggle Auto-Startup
+# Silent PowerShell Script for Uninstaller - Remove Network Kill Switch Auto-Startup
 # This is called by the Inno Setup uninstaller to remove the scheduled task
 
 $ErrorActionPreference = "Stop"
-$TaskName = "EthernetToggleApp"
+$TaskName = "NetworkKillSwitchApp"
 
 try {
-    # Check if task exists
+    # Check if task exists (including old name for upgrade path)
     $existingTask = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
 
     if ($existingTask) {
@@ -13,10 +13,16 @@ try {
         Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false | Out-Null
     }
 
+    # Also remove old task name if it exists
+    $oldTask = Get-ScheduledTask -TaskName "EthernetToggleApp" -ErrorAction SilentlyContinue
+    if ($oldTask) {
+        Unregister-ScheduledTask -TaskName "EthernetToggleApp" -Confirm:$false | Out-Null
+    }
+
     exit 0
 
 } catch {
     # Silent failure - don't block uninstallation
-    Write-EventLog -LogName Application -Source "Application" -EntryType Warning -EventId 1001 -Message "Failed to remove Ethernet Toggle scheduled task: $($_.Exception.Message)" -ErrorAction SilentlyContinue
+    Write-EventLog -LogName Application -Source "Application" -EntryType Warning -EventId 1001 -Message "Failed to remove Network Kill Switch scheduled task: $($_.Exception.Message)" -ErrorAction SilentlyContinue
     exit 0  # Exit with success anyway to not block uninstall
 }

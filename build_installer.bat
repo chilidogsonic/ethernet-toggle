@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 echo ============================================
-echo Ethernet Toggle - Installer Build Script
+echo Network Kill Switch - Installer Build Script
 echo ============================================
 echo.
 
@@ -44,12 +44,19 @@ echo [4/6] Building standalone executable with PyInstaller...
 echo This may take a few minutes...
 echo.
 
-if exist icon.ico (
-    echo Using icon file: icon.ico
-    pyinstaller --onefile --windowed --name "EthernetToggle" --icon="icon.ico" ethernet_toggle.py
+:: Check if spec file exists
+if exist NetworkKillSwitch.spec (
+    echo Using existing spec file: NetworkKillSwitch.spec
+    pyinstaller --clean NetworkKillSwitch.spec
 ) else (
-    echo No icon file found, building without icon...
-    pyinstaller --onefile --windowed --name "EthernetToggle" ethernet_toggle.py
+    :: Fallback to basic build if spec file is missing
+    if exist icon.ico (
+        echo Using icon file: icon.ico
+        pyinstaller --onefile --windowed --name "NetworkKillSwitch" --icon="icon.ico" --add-data "icons/status_on.ico;icons" --add-data "icons/status_off.ico;icons" network_kill_switch.py
+    ) else (
+        echo No icon file found, building without icon...
+        pyinstaller --onefile --windowed --name "NetworkKillSwitch" --add-data "icons/status_on.ico;icons" --add-data "icons/status_off.ico;icons" network_kill_switch.py
+    )
 )
 
 if %errorLevel% neq 0 (
@@ -59,14 +66,14 @@ if %errorLevel% neq 0 (
     exit /b 1
 )
 
-if not exist "dist\EthernetToggle.exe" (
-    echo ERROR: EthernetToggle.exe was not created!
+if not exist "dist\NetworkKillSwitch.exe" (
+    echo ERROR: NetworkKillSwitch.exe was not created!
     echo.
     pause
     exit /b 1
 )
 
-echo Executable built successfully: dist\EthernetToggle.exe
+echo Executable built successfully: dist\NetworkKillSwitch.exe
 echo.
 
 :: Check for Inno Setup
@@ -91,7 +98,7 @@ if "!ISCC_PATH!"=="" (
     echo Please download and install it from: https://jrsoftware.org/isinfo.php
     echo.
     echo The standalone executable has been created in the 'dist' folder.
-    echo You can distribute dist\EthernetToggle.exe directly, but it won't have
+    echo You can distribute dist\NetworkKillSwitch.exe directly, but it won't have
     echo an installer wizard or automatic uninstall capability.
     echo.
     pause
@@ -117,8 +124,8 @@ echo ============================================
 echo BUILD SUCCESSFUL!
 echo ============================================
 echo.
-echo Standalone executable: dist\EthernetToggle.exe
-echo Installer package:     Output\EthernetToggle-Setup.exe
+echo Standalone executable: dist\NetworkKillSwitch.exe
+echo Installer package:     Output\NetworkKillSwitch-Setup.exe
 echo.
 echo You can distribute the installer to users.
 echo The installer is approximately 20-30 MB and includes everything needed.

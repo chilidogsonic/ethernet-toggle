@@ -7,11 +7,11 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$TaskName = "EthernetToggleApp"
+$TaskName = "NetworkKillSwitchApp"
 
 try {
     # Get the executable path
-    $exePath = Join-Path $InstallPath "EthernetToggle.exe"
+    $exePath = Join-Path $InstallPath "NetworkKillSwitch.exe"
 
     # Verify executable exists
     if (-not (Test-Path $exePath)) {
@@ -19,10 +19,15 @@ try {
         exit 1
     }
 
-    # Remove existing task if it exists
+    # Remove existing task if it exists (including old name)
     $existingTask = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
     if ($existingTask) {
         Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false | Out-Null
+    }
+    # Also remove old task name if it exists
+    $oldTask = Get-ScheduledTask -TaskName "EthernetToggleApp" -ErrorAction SilentlyContinue
+    if ($oldTask) {
+        Unregister-ScheduledTask -TaskName "EthernetToggleApp" -Confirm:$false | Out-Null
     }
 
     # Create scheduled task action
@@ -38,7 +43,7 @@ try {
     $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 0)
 
     # Register the task
-    Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Description "Auto-start Ethernet Toggle system tray application" | Out-Null
+    Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Description "Auto-start Network Kill Switch system tray application" | Out-Null
 
     exit 0
 
